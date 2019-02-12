@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import android.widget.*;
 
+//hewwo?
+
 public class CryptoLogic extends AppCompatActivity {
 
     private Random random = new Random();
