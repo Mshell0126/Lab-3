@@ -3,5 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="instructionsText">Try to guess the secret word, one letter at a time.</string>
     <string name="buttonGuessText">Guess</string>
+    <string name="buttonNextWordText">Get next word</string>
     <string name="textViewGuessCounterText">0</string>
+    <string name="resultDefault"></string>
+    <string name="resultText">"You correctly deciphered %1$s. You made %2$d mistakes."</string>
 </resources>

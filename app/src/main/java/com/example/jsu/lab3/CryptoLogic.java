@@ -15,16 +15,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import android.widget.*;
 
-//hewwo?
-
 public class CryptoLogic extends AppCompatActivity {
 
     private Random random = new Random();
 
-    private ArrayList<String> secretWords = new ArrayList(Arrays.asList("APPLE", "BANANA", "CHERRY"));
+    private ArrayList<String> secretWords = new ArrayList(Arrays.asList("APPLE", "BANANA", "CHERRY", "RAMBUTAN", "DURIAN", "STARFRUIT", "DRAGONFRUIT", "TOMATO"));
     private String currentWord;
     private String guessBuilder;
     private int guessCounter;
+    private boolean gameOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +42,29 @@ public class CryptoLogic extends AppCompatActivity {
         });
 
         setNextWord();
+        gameOver = false;
 
 
     }
 
     public void onGuess(View v){
 
-            EditText inputBox = (EditText) findViewById(R.id.editTextGuesses);
-            TextView builder = (TextView) findViewById(R.id.textViewCorrect);
-        if(inputBox.getText().length()>0) {
+        EditText inputBox = (EditText) findViewById(R.id.editTextGuesses);
+        TextView builder = (TextView) findViewById(R.id.textViewCorrect);
+        TextView outputMessage = (TextView) findViewById(R.id.instructionsTextView);
+        Button button = (Button) findViewById(R.id.buttonGuess);
+
+        if(gameOver){
+            setNextWord();
+            outputMessage.setText(R.string.instructionsText);
+            inputBox.setEnabled(true);
+            button.setText(R.string.buttonGuessText);
+            builder.setText("");
+            gameOver = false;
+
+        }
+
+        else if(inputBox.getText().length()>0) {
             char letter = inputBox.getText().charAt(0);
             inputBox.setText("");
 
@@ -60,8 +73,11 @@ public class CryptoLogic extends AppCompatActivity {
                 guessBuilder += letter;
                 builder.setText(guessBuilder.toUpperCase());
                 if (currentWord.equals(guessBuilder)) {
-                    //setNextWord();
-                    displayResult();
+                    inputBox.setEnabled(false);
+
+                    outputMessage.setText(getString(R.string.resultText, currentWord.toUpperCase(), guessCounter));
+                    button.setText(R.string.buttonNextWordText);
+                    gameOver = true;
                 }
             } else {
                 guessCounter++;
@@ -91,11 +107,6 @@ public class CryptoLogic extends AppCompatActivity {
         }
         return shuffledWord;
 
-    }
-
-    private void displayResult(){
-        TextView outputMessage = (TextView) findViewById(R.id.instructionsTextView);
-        outputMessage.setText("You correctly deciphered " + currentWord.toUpperCase() + ". You made " + guessCounter + " mistakes.");
     }
 
     private void updateCounter(){
